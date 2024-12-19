@@ -1,0 +1,41 @@
+diff --git a/src/components/Modal.tsx b/src/components/Modal.tsx
+index 313ecee43bde4a0b6be9cbd13b673452725f0f6e..670e16a6466a080e6911b15763001c115c3d86f4 100644
+--- a/src/components/Modal.tsx
++++ b/src/components/Modal.tsx
+@@ -141,6 +141,8 @@ function Modal({
+     }).start();
+   }, [opacity, scale]);
+ 
++  const shouldModalDisappearRef = React.useRef(false);
++
+   const hideModal = React.useCallback(() => {
+     Animated.timing(opacity, {
+       toValue: 0,
+@@ -152,15 +154,17 @@ function Modal({
+         return;
+       }
+ 
+-      if (visible) {
++      if (visible && shouldModalDisappearRef.current) {
+         onDismissCallback();
+       }
+ 
+-      if (visibleRef.current) {
++      if (visibleRef.current && !shouldModalDisappearRef.current) {
+         showModal();
+       } else {
+         setRendered(false);
+       }
++
++      shouldModalDisappearRef.current = true;
+     });
+   }, [onDismissCallback, opacity, scale, showModal, visible]);
+ 
+@@ -171,6 +175,7 @@ function Modal({
+ 
+     const onHardwareBackPress = () => {
+       if (dismissable || dismissableBackButton) {
++        shouldModalDisappearRef.current = false;
+         hideModal();
+       }
+ 

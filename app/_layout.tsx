@@ -1,39 +1,47 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+import { Slot, Stack } from "expo-router";
+import { useMaterial3Theme } from "@pchmn/expo-material3-theme";
+import { SafeAreaView, StatusBar, useColorScheme, View } from "react-native";
+import { MD3DarkTheme, MD3LightTheme, PaperProvider } from "react-native-paper";
+import { CustomBottomNavigation } from "@/components/BottomNavigation";
+import { DatabaseProvider } from "@/providers/DatabaseProvider";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { ExerciseLoggerProvider } from "@/providers/ExerciseLoggerProvider";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+  const { theme } = useMaterial3Theme();
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+  const paperTheme =
+    colorScheme === "dark"
+      ? { ...MD3DarkTheme, colors: theme.dark }
+      : { ...MD3LightTheme, colors: theme.light };
 
-  if (!loaded) {
-    return null;
-  }
+  const statusBarStyle =
+    colorScheme === "dark" ? "light-content" : "dark-content";
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <PaperProvider theme={paperTheme}>
+      <StatusBar
+        backgroundColor={paperTheme.colors.surface}
+        barStyle={statusBarStyle}
+      />
+      <DatabaseProvider>
+        <ExerciseLoggerProvider>
+          <GestureHandlerRootView>
+            <SafeAreaView style={{ flex: 1 }}>
+              <View
+                style={{
+                  flex: 1,
+                  paddingTop: 8,
+                  backgroundColor: paperTheme.colors.background,
+                }}
+              >
+                <CustomBottomNavigation />
+              </View>
+            </SafeAreaView>
+          </GestureHandlerRootView>
+        </ExerciseLoggerProvider>
+      </DatabaseProvider>
+    </PaperProvider>
   );
 }
