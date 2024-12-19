@@ -1,50 +1,61 @@
-# Welcome to your Expo app 👋
+# Simple Gym Logger
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Simple Gym Logger is a React Native application designed to help users track their gym progress. Users can log their exercises, view their workout history, and visualize their progress over time.
 
-## Get started
+## Features
 
-1. Install dependencies
+- **Exercise Logging**: Add, edit, and delete exercise logs with details such as weight and reps.
+- **Workout History**: View logs for specific dates and navigate through weeks to see past workouts.
+- **Progress Visualization**: Graphs to visualize progress over time (feature in development).
 
+## Installation
+
+1. Clone the repository:
    ```bash
-   npm install
+   git clone https://github.com/antomanc/simple-gym-logger.git
+   cd simple-gym-logger
    ```
 
-2. Start the app
-
+2. Install dependencies:
    ```bash
-    npx expo start
+   bun install
    ```
 
-In the output, you'll find options to open the app in a
+3. Start the app:
+   ```bash
+   bun run android
+   ```
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Usage
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Logging Exercises
 
-## Get a fresh project
+1. Navigate to the "Logs" tab.
+2. Click the "+" button to add a new exercise log.
+3. Fill in the exercise details and save.
 
-When you're ready, run:
+### Viewing Workout History
 
-```bash
-npm run reset-project
-```
+1. Navigate to the "Logs" tab.
+2. Use the date selector to view logs for specific dates.
+3. Use the week selector to navigate through weeks.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Managing Exercises
 
-## Learn more
+1. Navigate to the "Exercises" tab.
+2. Add new exercises or edit existing ones.
+3. Search for exercises using the search bar.
 
-To learn more about developing your project with Expo, look at the following resources:
+### Settings
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+1. Navigate to the "Settings" tab.
+2. Customize app settings (feature in development).
 
-## Join the community
+### Viewing Graphs
 
-Join our community of developers creating universal apps.
+1. Navigate to the "Graphs" tab.
+2. View visualizations of your progress over time (feature in development).
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Contributing
+
+Contributions are welcome!
