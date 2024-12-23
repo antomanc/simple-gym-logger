@@ -1,7 +1,7 @@
 # Simple Gym Logger
 
-![Photo1](https://github.com/user-attachments/assets/62d9bc87-76d8-4637-9778-c2f505800633)
-![Photo2](https://github.com/user-attachments/assets/2a1f1b8a-e6ae-42f1-bb06-d1a6a5101996)
+<img src="https://github.com/user-attachments/assets/62d9bc87-76d8-4637-9778-c2f505800633" alt="app screenshot 1" height="400">
+<img src="https://github.com/user-attachments/assets/2a1f1b8a-e6ae-42f1-bb06-d1a6a5101996" alt="app screenshot 2" height="400">
 
 Simple Gym Logger is a React Native application designed to help users track their gym progress. Users can log their exercises, view their workout history, and visualize their progress over time.
 
