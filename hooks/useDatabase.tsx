@@ -20,8 +20,8 @@ export const useDatabase = () => {
 
     // console.log("getLogsByDate", date);
 
-    const startOfDay = new Date(date.setHours(0, 0, 0, 0)).getTime();
-    const endOfDay = new Date(date.setHours(23, 59, 59, 999)).getTime();
+    const startOfDay = new Date(date).setHours(0, 0, 0, 0);
+    const endOfDay = new Date(date).setHours(23, 59, 59, 999);
 
     const result = await context.db.getAllAsync(
       "SELECT * FROM workouts WHERE date >= ? AND date <= ?",

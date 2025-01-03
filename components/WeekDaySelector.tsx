@@ -11,6 +11,7 @@ interface WeekDaySelectorProps {
 }
 
 const daysOfWeek = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+// TODO settings to change first day of the week
 
 export const WeekDaySelector: React.FC<WeekDaySelectorProps> = ({
   selectedDate,
