@@ -60,7 +60,7 @@ export const ExerciseLoggerProvider: React.FC<ExerciseLoggerProviderProps> = ({
       const dateKey = date.toISOString().split("T")[0];
       if (!logs[dateKey] || forceFetch) {
         const fetchedLogs = await getLogsByDate(date);
-        if (!fetchedLogs?.length) return;
+        if (!fetchedLogs?.length && !forceFetch) return;
         setLogs((prevLogs) => ({
           ...prevLogs,
           [dateKey]: fetchedLogs,
