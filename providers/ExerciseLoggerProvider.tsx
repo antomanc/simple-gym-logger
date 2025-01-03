@@ -54,20 +54,19 @@ export const ExerciseLoggerProvider: React.FC<ExerciseLoggerProviderProps> = ({
 
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [logs, setLogs] = useState<{ [key: string]: ExerciseLog[] }>({});
-
   const fetchLogsByDate = useCallback(
     async (date: Date, forceFetch = false) => {
       const dateKey = date.toISOString().split("T")[0];
-      if (!logs[dateKey] || forceFetch) {
-        const fetchedLogs = await getLogsByDate(date);
-        if (!fetchedLogs?.length && !forceFetch) return;
-        setLogs((prevLogs) => ({
-          ...prevLogs,
-          [dateKey]: fetchedLogs,
-        }));
-      }
+      if (logs[dateKey] && !forceFetch) return;
+
+      const fetchedLogs = await getLogsByDate(date);
+
+      setLogs((prevLogs) => ({
+        ...prevLogs,
+        [dateKey]: fetchedLogs,
+      }));
     },
-    [getLogsByDate]
+    [getLogsByDate, logs]
   );
 
   const fetchExercises = useCallback(async () => {
