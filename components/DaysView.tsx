@@ -1,16 +1,6 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { View, StyleSheet } from "react-native";
 import { Button, IconButton, Text, useTheme } from "react-native-paper";
-
-type DateChange =
-  | {
-      increment: number;
-      newDate?: never;
-    }
-  | {
-      increment?: never;
-      newDate: Date;
-    };
 
 interface DaysViewProps {
   selectedDate: Date;
@@ -19,34 +9,34 @@ interface DaysViewProps {
 
 export const DaysView = ({ selectedDate, onDateChange }: DaysViewProps) => {
   const today = useMemo(() => new Date(), []);
-  const isDateToday = useMemo(() => {
-    return (
-      today.getDate() === selectedDate.getDate() &&
-      today.getMonth() === selectedDate.getMonth() &&
-      today.getFullYear() === selectedDate.getFullYear()
-    );
-  }, [selectedDate, today]);
+  const isToday = useMemo(
+    () => selectedDate.toDateString() === today.toDateString(),
+    [selectedDate, today]
+  );
 
-  const handleDateChange = ({ increment, newDate }: DateChange) => {
-    if (newDate) {
-      onDateChange(newDate);
-    } else {
+  const changeDate = useCallback(
+    (days: number) => {
+      if (days === 0) {
+        onDateChange(today);
+        return;
+      }
       const newDate = new Date(selectedDate);
-      newDate.setDate(newDate.getDate() + increment);
+      newDate.setDate(newDate.getDate() + days);
       onDateChange(newDate);
-    }
-  };
+    },
+    [onDateChange, selectedDate, today]
+  );
 
   return (
     <View style={styles.dateSelectorContainer}>
       <IconButton
         icon="chevron-left"
-        onPress={() => handleDateChange({ increment: -1 })}
+        onPress={() => changeDate(-1)}
         size={32}
-        style={{ margin: 0 }}
+        style={styles.iconButton}
       />
       <View style={styles.centerContent}>
-        {isDateToday ? (
+        {isToday ? (
           <>
             <Text variant="titleMedium">Today</Text>
             <Text variant="titleMedium" style={{ opacity: 0.5, marginLeft: 6 }}>
@@ -66,21 +56,21 @@ export const DaysView = ({ selectedDate, onDateChange }: DaysViewProps) => {
             })}
           </Text>
         )}
-        {!isDateToday && (
+        {!isToday && (
           <IconButton
-            onPress={() => handleDateChange({ newDate: today })}
+            onPress={() => changeDate(0)}
             icon="history"
             size={20}
-            style={{ margin: 0, marginLeft: 6 }}
+            style={{ ...styles.iconButton, marginLeft: 6 }}
           />
         )}
       </View>
 
       <IconButton
         icon="chevron-right"
-        onPress={() => handleDateChange({ increment: 1 })}
+        onPress={() => changeDate(1)}
         size={32}
-        style={{ margin: 0 }}
+        style={styles.iconButton}
       />
     </View>
   );
@@ -100,5 +90,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
     textAlign: "center",
+  },
+  iconButton: {
+    margin: 0,
   },
 });

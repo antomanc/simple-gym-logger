@@ -5,14 +5,7 @@ import {
   TextInput as TextInputNative,
   FlatList,
 } from "react-native";
-import {
-  Button,
-  List,
-  Dialog,
-  Portal,
-  TextInput,
-  FAB,
-} from "react-native-paper";
+import { Button, List, Dialog, TextInput, FAB } from "react-native-paper";
 import { Exercise } from "@/interfaces/Workouts";
 import { useExerciseLogger } from "@/hooks/useExerciseLogger";
 
@@ -90,14 +83,19 @@ export default function ExercisesScreen() {
             exercise.name.toLowerCase().includes(searchQuery.toLowerCase())
           )}
           keyExtractor={(exercise) => exercise.id.toString()}
-          renderItem={({ item: exercise }) => (
-            <List.Item
-              onPress={() => {
-                handleEdit(exercise);
-              }}
-              title={exercise.name}
-              left={(props) => <List.Icon {...props} icon="dumbbell" />}
-            />
+          renderItem={({ item: exercise, index }) => (
+            <View>
+              <List.Item
+                onPress={() => {
+                  handleEdit(exercise);
+                }}
+                title={exercise.name}
+                left={(props) => <List.Icon {...props} icon="dumbbell" />}
+              />
+              {index === exercises.length - 1 && (
+                <View style={{ height: 100 }} />
+              )}
+            </View>
           )}
           ListEmptyComponent={<List.Item title="No exercises found" />}
         />
@@ -140,7 +138,6 @@ export default function ExercisesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 8,
     overflow: "hidden",
     paddingBottom: 56,
   },
