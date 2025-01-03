@@ -78,12 +78,16 @@ export default function LogsScreen() {
     }, {} as { [key: number]: string });
   }, [exercises]);
 
+  const datesWithLogs = useMemo(() => {
+    return Object.keys(logs).filter((date) => logs[date].length > 0);
+  }, [logs]);
+
   return (
     <View style={styles.mainLogView}>
       <WeekDaySelector
         selectedDate={selectedDate}
         onDateChange={handleDateChange}
-        datesWithDot={Object.keys(logs)}
+        datesWithDot={datesWithLogs}
       />
       <DaysView selectedDate={selectedDate} onDateChange={handleDateChange} />
 
